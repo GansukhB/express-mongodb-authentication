@@ -40,6 +40,7 @@ const loginUser = async (req: Request, res: Response) => {
 
 const createGroup = async (req: Request, res: Response) => {
   const group = await UserGroup.create(req.body);
+
   res.status(201).send({
     message: "Created user group",
     data: {

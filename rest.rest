@@ -30,11 +30,11 @@ Authorization: {{ token }}
     "title": "First group",
     "permissions": [
         {
-            "model": "userGroup",
+            "module": "userGroup",
             "action": "read"
         },
         {
-            "model": "userGroup",
+            "module": "userGroup",
             "action": "create"
         }
     ]

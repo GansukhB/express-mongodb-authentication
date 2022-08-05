@@ -1,6 +1,7 @@
 import { Request, Response } from "express";
 import jwt, { JwtPayload } from "jsonwebtoken";
-import { User, UserGroup } from "./models";
+import { LeanDocument } from "mongoose";
+import { User, UserGroup, IPermission, IUserGroup } from "./models";
 
 type Next = () => void | Promise<void>;
 
@@ -29,7 +30,7 @@ const checkAuthorization = (req: Request, res: Response, next: Next) => {
     }
   );
 };
-const checkPermission = (model: String, action: String) => {
+const checkPermission = (module: String, action: String) => {
   return async (req: Request, res: Response, next: Next) => {
     const user = await User.findById(res.locals.userId)
       .populate("groups")
@@ -37,11 +38,11 @@ const checkPermission = (model: String, action: String) => {
 
     const userGroups = user?.groups;
     var permitted = false;
-    userGroups?.forEach(async (userGroup) => {
-      userGroup?.permissions.forEach(async (permission) => {
-        //console.log(permission.model, permission.action);
-        console.log(model, action);
-        if (model === permission.model && action === permission.action) {
+    userGroups?.forEach((userGroup) => {
+      userGroup?.permissions.forEach(async (permission: IPermission) => {
+        console.log(permission.module, permission.action);
+        //console.log(model, action);
+        if (module === permission.module && action === permission.action) {
           permitted = true;
           return;
         }

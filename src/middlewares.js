@@ -32,23 +32,23 @@ const checkAuthorization = (req, res, next) => {
     });
 };
 exports.checkAuthorization = checkAuthorization;
-const checkPermission = (model, action) => {
+const checkPermission = (module, action) => {
     return (req, res, next) => __awaiter(void 0, void 0, void 0, function* () {
         const user = yield models_1.User.findById(res.locals.userId)
             .populate("groups")
             .populate("groups.permissions");
         const userGroups = user === null || user === void 0 ? void 0 : user.groups;
         var permitted = false;
-        userGroups === null || userGroups === void 0 ? void 0 : userGroups.forEach((userGroup) => __awaiter(void 0, void 0, void 0, function* () {
+        userGroups === null || userGroups === void 0 ? void 0 : userGroups.forEach((userGroup) => {
             userGroup === null || userGroup === void 0 ? void 0 : userGroup.permissions.forEach((permission) => __awaiter(void 0, void 0, void 0, function* () {
-                //console.log(permission.model, permission.action);
-                console.log(model, action);
-                if (model === permission.model && action === permission.action) {
+                console.log(permission.module, permission.action);
+                //console.log(model, action);
+                if (module === permission.module && action === permission.action) {
                     permitted = true;
                     return;
                 }
             }));
-        }));
+        });
         if (!permitted)
             return res.status(403).send({
                 message: "Permission denied",

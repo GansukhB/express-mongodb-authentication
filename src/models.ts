@@ -1,4 +1,4 @@
-import { Schema, model } from "mongoose";
+import { Schema, PopulatedDoc, Document, model } from "mongoose";
 
 interface IUser {
   _id?: string;
@@ -6,14 +6,18 @@ interface IUser {
   email: string;
   avatar?: string;
   password?: string;
-  groups: [Schema.Types.ObjectId];
+  groups?: [PopulatedDoc<Document & IUserGroup>];
 }
 const userSchema = new Schema<IUser>({
   name: { type: String, required: true },
   email: { type: String, required: true },
   avatar: String,
   password: String,
-  groups: { type: [Schema.Types.ObjectId], default: [], ref: "usergroup" },
+  groups: {
+    type: [Schema.Types.ObjectId],
+    default: [],
+    ref: "usergroup",
+  },
 });
 
 const User = model<IUser>("user", userSchema);
@@ -25,18 +29,21 @@ enum Action {
   delete = "delete",
 }
 interface IPermission {
-  model: string;
+  _id?: string;
+  module: string;
   action: Action;
-}
-interface IUserGroup {
-  title: String;
-  permissions: [IPermission];
 }
 
 const permissionSchema = new Schema<IPermission>({
-  model: { type: String, required: true },
+  module: { type: String, required: true },
   action: { type: String, required: true },
 });
+
+interface IUserGroup {
+  _id?: string;
+  title: String;
+  permissions?: [PopulatedDoc<IPermission & Document>];
+}
 
 const userGroupSchema = new Schema<IUserGroup>({
   title: { type: String, required: true },
@@ -48,4 +55,4 @@ const userGroupSchema = new Schema<IUserGroup>({
 
 const UserGroup = model<IUserGroup>("usergroup", userGroupSchema);
 
-export { User, UserGroup };
+export { IPermission, IUserGroup, User, UserGroup };

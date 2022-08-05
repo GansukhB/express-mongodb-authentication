@@ -7,7 +7,11 @@ const userSchema = new mongoose_1.Schema({
     email: { type: String, required: true },
     avatar: String,
     password: String,
-    groups: { type: [mongoose_1.Schema.Types.ObjectId], default: [], ref: "usergroup" },
+    groups: {
+        type: [mongoose_1.Schema.Types.ObjectId],
+        default: [],
+        ref: "usergroup",
+    },
 });
 const User = (0, mongoose_1.model)("user", userSchema);
 exports.User = User;
@@ -19,7 +23,7 @@ var Action;
     Action["delete"] = "delete";
 })(Action || (Action = {}));
 const permissionSchema = new mongoose_1.Schema({
-    model: { type: String, required: true },
+    module: { type: String, required: true },
     action: { type: String, required: true },
 });
 const userGroupSchema = new mongoose_1.Schema({
