@@ -11,7 +11,7 @@ interface Payload extends JwtPayload {
 
 const checkAuthorization = (req: Request, res: Response, next: Next) => {
   const token: string = req.headers?.authorization || "";
-  console.log("aa", token);
+
   jwt.verify(
     token,
     process.env.JWT_SECRET || "secret",
@@ -41,7 +41,7 @@ const checkPermission = (module: String, action: String) => {
     userGroups?.forEach((userGroup) => {
       userGroup?.permissions.forEach(async (permission: IPermission) => {
         console.log(permission.module, permission.action);
-        //console.log(model, action);
+
         if (module === permission.module && action === permission.action) {
           permitted = true;
           return;

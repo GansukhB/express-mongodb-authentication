@@ -18,7 +18,6 @@ const models_1 = require("./models");
 const checkAuthorization = (req, res, next) => {
     var _a;
     const token = ((_a = req.headers) === null || _a === void 0 ? void 0 : _a.authorization) || "";
-    console.log("aa", token);
     jsonwebtoken_1.default.verify(token, process.env.JWT_SECRET || "secret", function async(err, decoded) {
         const { userId } = decoded || "";
         res.locals.userId = userId;
@@ -42,7 +41,6 @@ const checkPermission = (module, action) => {
         userGroups === null || userGroups === void 0 ? void 0 : userGroups.forEach((userGroup) => {
             userGroup === null || userGroup === void 0 ? void 0 : userGroup.permissions.forEach((permission) => __awaiter(void 0, void 0, void 0, function* () {
                 console.log(permission.module, permission.action);
-                //console.log(model, action);
                 if (module === permission.module && action === permission.action) {
                     permitted = true;
                     return;

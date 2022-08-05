@@ -1,6 +1,6 @@
 {
   "name": "express-mongo-authentication",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "User authentication module with express and MongoDB",
   "main": "index.js",
   "repository": "git@github.com:GansukhB/express-mongodb-authentication.git",
