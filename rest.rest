@@ -1,0 +1,46 @@
+@token = eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiI2MmVjZDA4ODYwNGE2MTM2NTgyY2JhNTUiLCJpYXQiOjE2NTk2ODcwNTQsImV4cCI6MTY1OTc3MzQ1NH0.SqZyvRAYAUGFeLUjf27Cg6AND_0llPjXPHmxcG3yknU
+
+POST http://localhost:3000/user/create HTTP/1.1
+content-type: application/json
+
+{
+    "name": "name",
+    "email": "test1@email.com",
+    "password": "pass",
+    "groups": ["62eccf80bc91cd20a5951875"]
+}
+
+# eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpYXQiOjE2NTk2ODM4NDAsImV4cCI6MTY1OTc3MDI0MH0.gY8JBTprk7XwMeY0FTvOItlbeBTIrMro7ziOBy8FdZg
+### Login
+
+POST http://localhost:3000/user/login HTTP/1.1
+content-type: application/json
+
+{
+    "email": "test1@email.com",
+    "password": "pass"
+}
+
+### Create User group
+POST http://localhost:3000/userGroup/create HTTP/1.1
+content-type: application/json
+Authorization: {{ token }}
+
+{
+    "title": "First group",
+    "permissions": [
+        {
+            "model": "userGroup",
+            "action": "read"
+        },
+        {
+            "model": "userGroup",
+            "action": "create"
+        }
+    ]
+}
+
+### Read User group list
+GET http://localhost:3000/userGroup/list HTTP/1.1
+content-type: application/json
+Authorization: {{ token }}

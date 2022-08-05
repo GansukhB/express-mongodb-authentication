@@ -9,6 +9,7 @@ const app_1 = __importDefault(require("./app"));
 dotenv_1.default.config();
 const port = process.env.PORT || 3000;
 const uri = process.env.MONGODB_URL || "mongodb://localhost:27017/nest_hr";
+console.log(uri);
 mongoose_1.default.connect(uri);
 const { connection } = mongoose_1.default;
 connection.once("open", () => {

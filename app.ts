@@ -1,6 +1,7 @@
 import express from "express";
 import cors from "cors";
-import movieRouter from "./routes/movieRouter";
+import { userRouter, userGroupRouter } from "./src/routes";
+import { checkAuthorization } from "./src/middlewares";
 
 const app = express();
 
@@ -11,7 +12,8 @@ app.use(cors());
 app.use(express.json());
 
 // Routers
-app.use(movieRouter);
+app.use("/user", userRouter);
+app.use("/userGroup", checkAuthorization, userGroupRouter);
 
 app.get("/", (req, res) => {
   res.send("SERVICE RUNNING");
